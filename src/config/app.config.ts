@@ -14,6 +14,9 @@ const appConfig = () => ({
   GOOGLE_CALLBACK_URL: getEnv("GOOGLE_CALLBACK_URL"),
 
   FRONTEND_ORIGIN: getEnv("FRONTEND_ORIGIN", "localhost"),
+  // Prefer including protocol for CORS; default to Vite dev URL
+  // Note: FRONTEND_ORIGIN env, if set, will override this value.
+  // Kept above for backwards compatibility; consider migrating to full URL in envs.
   FRONTEND_GOOGLE_CALLBACK_URL: getEnv("FRONTEND_GOOGLE_CALLBACK_URL"),
 });
 

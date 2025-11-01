@@ -23,14 +23,17 @@ const app = express();
 const BASE_PATH = config.BASE_PATH;
 
 // CORS must be first to handle preflight requests
-app.use(
-  cors({
-    origin: config.FRONTEND_ORIGIN || "http://localhost:5173", // frontend origin from env
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // allow cookies / sessions
-  })
-);
+const corsOptions: cors.CorsOptions = {
+  origin: config.FRONTEND_ORIGIN || "http://localhost:5173", // frontend origin from env
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: false, // JWT only; no cookies/sessions
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+// Explicitly handle preflight requests for all routes
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
@@ -48,7 +51,7 @@ app.get(
 );
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
-app.use(`${BASE_PATH}/user`, userRoutes);
+app.use(`${BASE_PATH}/user`, isAuthenticated, userRoutes);
 app.use(`${BASE_PATH}/workspace`, isAuthenticated, workspaceRoutes);
 app.use(`${BASE_PATH}/member`, isAuthenticated, memberRoutes);
 app.use(`${BASE_PATH}/project`, isAuthenticated, projectRoutes);
