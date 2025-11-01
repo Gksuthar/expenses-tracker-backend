@@ -37,7 +37,7 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000,
     secure: config.NODE_ENV === "production",
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: config.NODE_ENV === "production" ? "none" : "lax", // 'none' required for cross-site in production
   })
 );
 
@@ -47,7 +47,7 @@ app.use(passport.session());
 // app.use();
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend origin
+    origin: config.FRONTEND_ORIGIN || "http://localhost:5173", // frontend origin from env
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // allow cookies / sessions
   })
