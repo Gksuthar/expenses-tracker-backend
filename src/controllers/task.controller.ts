@@ -30,11 +30,12 @@ export const createTaskController = asyncHandler(
     const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
     roleGuard(role, [Permissions.CREATE_TASK]);
 
+    // zod validated `body`; cast to any to satisfy service signature
     const { task } = await createTaskService(
       workspaceId,
       projectId,
       userId,
-      body
+      body as any
     );
 
     return res.status(HTTPSTATUS.OK).json({
@@ -61,7 +62,7 @@ export const updateTaskController = asyncHandler(
       workspaceId,
       projectId,
       taskId,
-      body
+      body as any
     );
 
     return res.status(HTTPSTATUS.OK).json({

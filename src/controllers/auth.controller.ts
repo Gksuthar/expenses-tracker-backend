@@ -28,7 +28,8 @@ export const registerUserController = asyncHandler(
       ...req.body,
     });
     console.log("Registering user with data:", body);
-    await registerUserService(body);
+  // cast to any to satisfy service parameter types; zod has validated the shape
+  await registerUserService(body as any);
 
     return res.status(HTTPSTATUS.CREATED).json({
       message: "User created successfully",

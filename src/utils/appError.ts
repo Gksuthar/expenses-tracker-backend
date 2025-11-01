@@ -13,7 +13,12 @@ export class AppError extends Error {
     super(message);
     this.statusCode = statusCode;
     this.errorCode = errorCode;
-    Error.captureStackTrace(this, this.constructor);
+    // captureStackTrace is available in V8 (Node). Guard for environments where it's not present.
+    if (typeof (Error as any).captureStackTrace === "function") {
+      (Error as any).captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = new Error(message).stack;
+    }
   }
 }
 
