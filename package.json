@@ -7,7 +7,7 @@
     "seed": "ts-node src/seeders/role.seeder.ts",
     "dev": "ts-node-dev --files src/index.ts",
     "build": "tsc",
-    "start": "NODE_PATH=./node_modules node dist/index.js"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
