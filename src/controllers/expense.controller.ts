@@ -26,7 +26,12 @@ export const createExpenseController = asyncHandler(
     const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
     roleGuard(role, [Permissions.CREATE_TASK]); // Reusing permission, or add Permissions.MANAGE_EXPENSES
 
-    const { expense } = await createExpenseService(workspaceId, userId, body);
+    // zod validated body; cast to any for service call
+    const { expense } = await createExpenseService(
+      workspaceId,
+      userId,
+      body as any
+    );
 
     return res.status(HTTPSTATUS.CREATED).json({
       message: "Expense created successfully",
@@ -70,7 +75,11 @@ export const updateExpenseController = asyncHandler(
     const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
     roleGuard(role, [Permissions.EDIT_TASK]);
 
-    const { expense } = await updateExpenseService(expenseId, workspaceId, body);
+    const { expense } = await updateExpenseService(
+      expenseId,
+      workspaceId,
+      body as any
+    );
 
     return res.status(HTTPSTATUS.OK).json({
       message: "Expense updated successfully",
