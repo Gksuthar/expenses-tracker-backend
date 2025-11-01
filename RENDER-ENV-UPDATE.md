@@ -2,8 +2,8 @@
 
 ## New Backend URL
 Your backend URL has changed:
-- ❌ Old: `https://expenses-tracker-backend-5-dlni.onrender.com`
-- ✅ New: `https://expenses-tracker-backend-5-dlni.onrender.com`
+- ❌ Old: `https://expenses-tracker-backend-6-64xq.onrender.com`
+- ✅ New: `https://expenses-tracker-backend-6-64xq.onrender.com`
 
 ---
 
@@ -25,7 +25,7 @@ NODE_ENV=production
 PORT=8000
 MONGO_URI=mongodb+srv://rahul:rahul@cluster0.nv076.mongodb.net/TaskManagerDB?retryWrites=true&w=majority&appName=Cluster0
 SESSION_SECRET=ganesh
-GOOGLE_CALLBACK_URL=https://expenses-tracker-backend-5-dlni.onrender.com/api/auth/google/callback
+GOOGLE_CALLBACK_URL=https://expenses-tracker-backend-6-64xq.onrender.com/api/auth/google/callback
 FRONTEND_ORIGIN=https://expenses-tracker-frontend-mu7x.vercel.app
 FRONTEND_GOOGLE_CALLBACK_URL=https://expenses-tracker-frontend-mu7x.vercel.app/google/callback
 SESSION_EXPIRES_IN=24h
@@ -55,7 +55,7 @@ Expected:
 ## Client Already Updated
 The client `.env` is already pointing to new backend:
 ```
-VITE_API_BASE_URL="https://expenses-tracker-backend-5-dlni.onrender.com/api"
+VITE_API_BASE_URL="https://expenses-tracker-backend-6-64xq.onrender.com/api"
 ```
 
 ---
