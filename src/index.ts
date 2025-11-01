@@ -48,6 +48,7 @@ app.use(
     secure: config.NODE_ENV === "production",
     httpOnly: true,
     sameSite: config.NODE_ENV === "production" ? "none" : "lax", // 'none' required for cross-site in production
+    // Note: cookie-session doesn't support domain option, it uses the request domain automatically
   })
 );
 
