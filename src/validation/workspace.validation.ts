@@ -11,7 +11,9 @@ export const descriptionSchema = z.string().trim().optional();
 export const workspaceIdSchema = z
   .string()
   .trim()
-  .min(1, { message: "Workspace ID is required" });
+  .regex(/^[a-fA-F0-9]{24}$/i, {
+    message: "Invalid workspaceId. Expected a 24-character hex string.",
+  });
 
 export const changeRoleSchema = z.object({
   roleId: z.string().trim().min(1),

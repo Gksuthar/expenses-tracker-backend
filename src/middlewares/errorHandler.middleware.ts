@@ -1,4 +1,5 @@
 import { ErrorRequestHandler, Response } from "express";
+import mongoose from "mongoose";
 import { HTTPSTATUS } from "../config/http.config";
 import { AppError } from "../utils/appError";
 import { z } from "zod";
@@ -32,6 +33,17 @@ export const errorHandler: ErrorRequestHandler = (
 
   if (error instanceof z.ZodError) {
     return formatZodError(res, error);
+  }
+
+  // Handle common Mongoose errors gracefully
+  if (
+    error?.name === "CastError" ||
+    error instanceof mongoose.Error.CastError
+  ) {
+    return res.status(HTTPSTATUS.BAD_REQUEST).json({
+      message: "Invalid identifier format",
+      errorCode: ErrorCodeEnum.VALIDATION_ERROR,
+    });
   }
 
   if (error instanceof AppError) {
