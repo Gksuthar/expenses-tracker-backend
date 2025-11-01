@@ -53,15 +53,24 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+// Debug endpoint to check session
+app.get("/debug/session", (req: Request, res: Response) => {
+  res.json({
+    session: req.session,
+    user: req.user,
+    isAuthenticated: req.isAuthenticated ? req.isAuthenticated() : false,
+    cookies: req.headers.cookie,
+    origin: req.headers.origin,
+  });
+});
+
 app.get(
   `/`,
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    throw new BadRequestException(
-      "This is a bad request",
-      ErrorCodeEnum.AUTH_INVALID_TOKEN
-    );
     return res.status(HTTPSTATUS.OK).json({
-      message: "Hello Subscribe to the channel & share",
+      message: "Backend API is running",
+      environment: config.NODE_ENV,
+      corsOrigin: config.FRONTEND_ORIGIN,
     });
   })
 );
