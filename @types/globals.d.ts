@@ -8,6 +8,7 @@ declare namespace NodeJS {
 
 declare var process: {
   env: NodeJS.ProcessEnv;
+  exit: (code?: number) => never;
   cwd?: () => string;
   // keep it minimal; add more if needed later
 };
