@@ -22,9 +22,20 @@ import siteUpdateRoutes from "./routes/site-update.route";
 const app = express();
 const BASE_PATH = config.BASE_PATH;
 
+// Build allowed origins list from env (supports comma-separated list)
+const allowedOrigins = (config.ALLOWED_ORIGINS || config.FRONTEND_ORIGIN || "http://localhost:5173")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 // CORS must be first to handle preflight requests
 const corsOptions: cors.CorsOptions = {
-  origin: config.FRONTEND_ORIGIN || "http://localhost:5173", // frontend origin from env
+  origin: (origin, callback) => {
+    // allow REST tools or same-origin requests with no Origin header
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: false, // JWT only; no cookies/sessions
@@ -45,7 +56,7 @@ app.get(
     return res.status(HTTPSTATUS.OK).json({
       message: "Backend API is running",
       environment: config.NODE_ENV,
-      corsOrigin: config.FRONTEND_ORIGIN,
+      corsOrigins: allowedOrigins,
     });
   })
 );
