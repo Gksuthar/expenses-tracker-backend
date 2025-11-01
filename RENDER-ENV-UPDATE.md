@@ -2,7 +2,7 @@
 
 ## New Backend URL
 Your backend URL has changed:
-- ❌ Old: `https://expenses-tracker-backend-2-9z66.onrender.com`
+- ❌ Old: `https://expenses-tracker-backend-5-dlni.onrender.com`
 - ✅ New: `https://expenses-tracker-backend-5-dlni.onrender.com`
 
 ---
