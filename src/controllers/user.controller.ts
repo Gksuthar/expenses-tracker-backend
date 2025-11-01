@@ -8,7 +8,7 @@ export const getCurrentUserController = asyncHandler(
     const userId = req.user?._id;
 
     const { user } = await getCurrentUserService(userId);
-
+    console.log("Fetched current user:", user);
     return res.status(HTTPSTATUS.OK).json({
       message: "User fetch successfully",
       user,
