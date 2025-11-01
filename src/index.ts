@@ -23,7 +23,11 @@ const app = express();
 const BASE_PATH = config.BASE_PATH;
 
 // Build allowed origins list from env (supports comma-separated list)
-const allowedOrigins = (config.ALLOWED_ORIGINS || config.FRONTEND_ORIGIN || "http://localhost:5173")
+const allowedOrigins = [
+  config.ALLOWED_ORIGINS, // comma-separated list
+  config.FRONTEND_ORIGIN || "http://localhost:5173",
+]
+  .join(",")
   .split(",")
   .map((s) => s.trim())
   .filter(Boolean);
