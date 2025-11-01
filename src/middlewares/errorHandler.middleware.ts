@@ -1,7 +1,7 @@
 import { ErrorRequestHandler, Response } from "express";
 import { HTTPSTATUS } from "../config/http.config";
 import { AppError } from "../utils/appError";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import { ErrorCodeEnum } from "../enums/error-code.enum";
 
 const formatZodError = (res: Response, error: z.ZodError) => {
@@ -30,7 +30,7 @@ export const errorHandler: ErrorRequestHandler = (
     });
   }
 
-  if (error instanceof ZodError) {
+  if (error instanceof z.ZodError) {
     return formatZodError(res, error);
   }
 
