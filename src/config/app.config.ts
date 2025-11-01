@@ -6,8 +6,8 @@ const appConfig = () => ({
   BASE_PATH: getEnv("BASE_PATH", "/api"),
   MONGO_URI: getEnv("MONGO_URI", ""),
 
-  SESSION_SECRET: getEnv("SESSION_SECRET"),
-  SESSION_EXPIRES_IN: getEnv("SESSION_EXPIRES_IN"),
+  JWT_SECRET: getEnv("JWT_SECRET", "your-super-secret-jwt-key-change-in-production"),
+  JWT_EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "7d"),
 
   GOOGLE_CLIENT_ID: getEnv("GOOGLE_CLIENT_ID"),
   GOOGLE_CLIENT_SECRET: getEnv("GOOGLE_CLIENT_SECRET"),
