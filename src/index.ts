@@ -26,6 +26,16 @@ import siteUpdateRoutes from "./routes/site-update.route";
 const app = express();
 const BASE_PATH = config.BASE_PATH;
 
+// CORS must be first to handle preflight requests
+app.use(
+  cors({
+    origin: config.FRONTEND_ORIGIN || "http://localhost:5173", // frontend origin from env
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // allow cookies / sessions
+  })
+);
+
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
@@ -43,15 +53,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// app.use();
-app.use(
-  cors({
-    origin: config.FRONTEND_ORIGIN || "http://localhost:5173", // frontend origin from env
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // allow cookies / sessions
-  })
-);
 app.get(
   `/`,
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
