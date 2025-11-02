@@ -104,14 +104,23 @@ export const getWorkspaceMembersService = async (workspaceId: string) => {
   const members = await MemberModel.find({
     workspaceId,
   })
-    .populate("userId", "name email profilePicture -password")
+    .populate("userId", "name email profilePicture")
     .populate("role", "name");
+
+  // Guard: filter out members with missing userId or role to prevent 500
+  const validMembers = members.filter(
+    (m) =>
+      m.userId &&
+      typeof m.userId !== "string" &&
+      m.role &&
+      typeof m.role !== "string"
+  );
 
   const roles = await RoleModel.find({}, { name: 1, _id: 1 })
     .select("-permission")
     .lean();
 
-  return { members, roles };
+  return { members: validMembers, roles };
 };
 
 export const getWorkspaceAnalyticsService = async (workspaceId: string) => {

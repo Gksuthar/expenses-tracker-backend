@@ -44,10 +44,12 @@ export const getProjectsInWorkspaceService = async (
   })
     .skip(skip)
     .limit(pageSize)
-    .populate("createdBy", "_id name profilePicture -password")
+    .populate("createdBy", "_id name profilePicture")
     .sort({ createdAt: -1 });
 
   const totalPages = Math.ceil(totalCount / pageSize);
+  console.log("Projects:", projects);
+  console.log("Total Count:", totalCount);
 
   return { projects, totalCount, totalPages, skip };
 };
